@@ -23,8 +23,7 @@ async function removeDuplicate() {
 // removeDuplicate();
 
 const getUsersByName = async (name) => {
-  const user = await User.find({ name: name });
-  console.log("User By Name : " + user);
+  const user = await User.findOne({ name });
   if (user) {
     return user;
   } else {
@@ -32,7 +31,18 @@ const getUsersByName = async (name) => {
   }
 };
 
+const getUsersByEmail = async (email) => {
+  const user = await User.findOne({ email });
+  if (!user) return null;
+  return user;
+};
+
+function resetModel() {
+  mongoose.deleteModel("User");
+}
 module.exports = {
   db,
   getUsersByName,
+  getUsersByEmail,
+  resetModel,
 };

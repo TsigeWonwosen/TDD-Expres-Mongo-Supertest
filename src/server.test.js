@@ -1,4 +1,5 @@
 const request = require("supertest");
+
 const { expect } = require("chai");
 const app = require("./server.js"); // Your Express app instance
 
@@ -11,10 +12,10 @@ describe("GET /", () => {
 
   it("POST /send", async () => {
     const newUser = {
-      name: "Hoyam",
+      name: "Abera",
       age: 24,
-      email: "hoyam@gmail.com",
-      address: "Morocco , M.m",
+      email: "abera@gmail.com",
+      address: "Ethiopia , Dire Dewa",
     };
     const response = await request(app).post("/send").expect("Content-Type", /json/).send(newUser);
 
@@ -46,7 +47,7 @@ describe("GET /", () => {
   });
 
   it("DELETE - return the deleted user by Id", async () => {
-    const userDeleted = await request(app).delete("/users/64f26d6c6f8b89b4500ef9a9").expect("Content-Type", /json/);
+    const userDeleted = await request(app).delete("/users/64f4a65e47f8a0497f72bb13").expect("Content-Type", /json/);
 
     console.log("Deleted user: " + userDeleted.data);
     expect(userDeleted.status).to.equal(200);

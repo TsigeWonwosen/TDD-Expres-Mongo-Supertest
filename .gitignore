@@ -2,3 +2,5 @@
 *.odt
 *pdf
 .gitignore
+.nyc_output
+/coverage
