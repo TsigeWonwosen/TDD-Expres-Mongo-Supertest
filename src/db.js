@@ -22,4 +22,17 @@ async function removeDuplicate() {
 
 // removeDuplicate();
 
-module.exports = db;
+const getUsersByName = async (name) => {
+  const user = await User.find({ name: name });
+  console.log("User By Name : " + user);
+  if (user) {
+    return user;
+  } else {
+    return { error: "User not found" };
+  }
+};
+
+module.exports = {
+  db,
+  getUsersByName,
+};
