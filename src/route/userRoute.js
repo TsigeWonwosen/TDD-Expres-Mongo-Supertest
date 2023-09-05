@@ -21,7 +21,7 @@ const users = [
   },
 ];
 
-router.get("/", async (req, res) => {
+router.get("^/$|/users", async (req, res) => {
   try {
     const userFromDatabase = await User.find();
     return res.status(200).json(userFromDatabase);
