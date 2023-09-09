@@ -6,9 +6,11 @@ const errorHandler = require("./middleware/errorHandler");
 const { logger } = require("./middleware/logEvents");
 const app = express();
 
+require("dotenv").config();
 const PORT = process.env.PORT || 5000;
 require("./db.js");
 
+console.log(">>>>> " + process.env.ACCESS_TOKEN_SECRET);
 app.use(express.json());
 app.use(bodyParser.json());
 

@@ -2,28 +2,35 @@ const { User } = require("../model/userModel");
 
 const getAllUsers = async (req, res) => {
   try {
-    const userFromDatabase = await User.find();
-    return res.status(200).json(userFromDatabase);
+    const users = await User.find();
+    if (!users) return res.status(204).json({ message: "No users found." });
+
+    return res.status(200).json(users);
   } catch (error) {
     console.log("Database Error : " + error);
   }
 };
 
 const createNewUser = async (req, res) => {
+  const { name, age, email, address } = req.body;
+  if (!name || !age || !email || !address) {
+    return res.status(400).json({ message: "Name , age, email and address are required." });
+  }
+
   const user = new User({
-    name: req.body.name,
-    age: req.body.age,
-    email: req.body.email,
-    address: req.body.address,
+    name,
+    age,
+    email,
+    address,
   });
 
   try {
     let checkUser = await User.findOne({ name: user.name });
     if (checkUser) {
-      return res.status(400).json({ data: "User is already Register ." });
+      return res.status(409).json({ data: "User is already Registered ." });
     }
-    const newUser = await user.save();
 
+    const newUser = await user.save();
     return res.status(201).json({ data: newUser });
   } catch (e) {
     console.log("Database Post Error : " + error);
@@ -33,11 +40,16 @@ const createNewUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    const obj = await User.findOne({ name: req.params.name });
+    const user = await User.findOne({ name: req.params.name });
 
-    obj.email = req.body.email;
-    await obj.save();
-    return res.status(200).json({ data: obj });
+    if (!user) return res.status(204).json({ message: `No user matches ${req.params.name} name.` });
+
+    if (req.body?.email) u8 = ser.email = req.body.email;
+    if (req.body?.name) user.name = req.body.name;
+    if (req.body?.address) user.address = req.body.address;
+
+    await user.save();
+    return res.status(200).json({ data: user });
   } catch (e) {
     res.status(500).json({ error: e.massage });
   }
@@ -45,22 +57,32 @@ const updateUser = async (req, res) => {
 
 const getUserByName = async (req, res) => {
   try {
-    const obj = await User.findOne({ name: req.params.name });
+    if (!req.params.name) return res.status(400).json({ message: "user name required." });
+    const username = req.params.name.toLowerCase();
+    const obj = await User.findOne({ name: username });
+    if (!obj) return res.status(400).json({ message: "User is not found. " });
     return res.status(200).json({ data: obj });
   } catch (error) {
-    res.status(500).json({ error: error.massage });
+    res.status(500).json({ error: error.message });
   }
 };
 
 const deleteUser = async (req, res) => {
   try {
-    const deletedUser = await User.findByIdAndRemove(req.params.id);
-    if (!deletedUser) {
-      return res.status(400).json({ data: "User is not in DB." });
+    const userId = req.params.id;
+    if (!userId) {
+      return res.status(400).json({ message: `User Id required.` });
     }
-    return res.status(200).json({ data: deletedUser });
+    const user = await User.findOne({ _id: userId }).exec();
+    console.log(" 2*** " + user);
+
+    if (!user) {
+      return res.status(400).json({ data: "User is not found." });
+    }
+    const result = await user.deleteOne({ _id: userId });
+    return res.status(200).json({ data: result });
   } catch (error) {
-    res.status(500).json({ error: error.massage });
+    res.status(500).json({ error: error.message });
   }
 };
 module.exports = {

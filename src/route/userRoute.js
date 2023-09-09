@@ -5,7 +5,7 @@ const { getAllUsers, createNewUser, updateUser, getUserByName, deleteUser } = re
 
 router.get("^/$|/users", getAllUsers);
 
-router.post("/users/add", createNewUser);
+router.post("/users/", createNewUser);
 
 router.put("/users/:name", updateUser);
 
