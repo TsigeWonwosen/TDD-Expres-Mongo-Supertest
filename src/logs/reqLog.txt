@@ -354,3 +354,10 @@
 20230910	17:30:08	1b11e41c-030a-4028-848a-323d04ba4687	PUT	undefined	/employees/64fcefd293afff897bb3a50e
 20230910	17:30:12	331c8c11-9943-4cf1-a3e4-b5765df59c62	POST	undefined	/employees/refresh
 20230910	17:30:22	b4efcd83-102e-430e-a79c-8a1ffd75b7ed	PUT	undefined	/employees/64fcefd293afff897bb3a50e
+20230910	18:57:09	a43d113a-45cf-4abb-985d-cad53162e8f3	POST	undefined	/employees/refresh
+20230910	18:58:08	1e3c4ca1-e6d0-4905-9f1b-da41defbbc82	GET	undefined	/employees/logout
+20230910	18:58:24	1e888b96-d537-443b-8d2d-57ebb5eecc2a	POST	undefined	/employees/refresh
+20230910	18:59:28	5941ac2b-438f-4b20-ab81-18f9754f0a12	GET	undefined	/employees/login
+20230910	18:59:37	b435e3d5-6350-48ee-83c9-f591e6b39e67	POST	undefined	/employees/refresh
+20230910	19:00:00	903b4ecc-295b-49f1-a5ac-028bb5e544dc	POST	undefined	/employees/refresh
+20230910	19:00:02	528404b1-a74e-46c0-9115-4debfdcf3248	POST	undefined	/employees/refresh
