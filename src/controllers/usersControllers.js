@@ -58,7 +58,7 @@ const updateUser = async (req, res) => {
 const getUserByName = async (req, res) => {
   try {
     if (!req.params.name) return res.status(400).json({ message: "user name required." });
-    const username = req.params.name.toLowerCase();
+    const username = req.params.name;
     const obj = await User.findOne({ name: username });
     if (!obj) return res.status(400).json({ message: "User is not found. " });
     return res.status(200).json({ data: obj });
