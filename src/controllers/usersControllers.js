@@ -40,13 +40,15 @@ const createNewUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    const user = await User.findOne({ name: req.params.name });
+    const id = req.params.id.toString();
+    const user = await User.findOne({ _id: id });
 
-    if (!user) return res.status(204).json({ message: `No user matches ${req.params.name} name.` });
+    if (!user) return res.status(204).json({ message: `No user matches ${req.params.id} name.` });
 
-    if (req.body?.email) u8 = ser.email = req.body.email;
+    if (req.body?.email) user.email = req.body.email;
     if (req.body?.name) user.name = req.body.name;
     if (req.body?.address) user.address = req.body.address;
+    if (req.body?.age) user.age = req.body.age;
 
     await user.save();
     return res.status(200).json({ data: user });
@@ -54,6 +56,19 @@ const updateUser = async (req, res) => {
     res.status(500).json({ error: e.massage });
   }
 };
+
+const getUser = async (req,res) => {
+  try {
+    if (!req.params.id) return res.status(400).json({ message: "user Id required." });
+    const id = req.params.id.toString();
+    const obj = await User.findOne({ _id: id });
+    if (!obj) return res.status(400).json({ message: "User is not found. " });
+    return res.status(200).json({ data: obj });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
 
 const getUserByName = async (req, res) => {
   try {
@@ -90,5 +105,6 @@ module.exports = {
   createNewUser,
   updateUser,
   getUserByName,
+  getUser,
   deleteUser,
 };
