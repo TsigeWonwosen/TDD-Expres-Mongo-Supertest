@@ -41,7 +41,8 @@ const createNewUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const id = req.params.id.toString();
-    const user = await User.findOne({ _id: id });
+    // const user = await User.findById({ _id: id });
+    const user = await User.findById(id);
 
     if (!user) return res.status(204).json({ message: `No user matches ${req.params.id} name.` });
 
@@ -50,10 +51,13 @@ const updateUser = async (req, res) => {
     if (req.body?.address) user.address = req.body.address;
     if (req.body?.age) user.age = req.body.age;
 
+     // Explicitly set _id
+    user._id = id;
+    
     await user.save();
     return res.status(200).json({ data: user });
   } catch (e) {
-    res.status(500).json({ error: e.massage });
+    res.status(500).json({ error: e.message });
   }
 };
 
