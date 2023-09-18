@@ -31,9 +31,9 @@ const createNewUser = async (req, res) => {
     }
 
     const newUser = await user.save();
-    return res.status(201).json({ data: newUser });
+    return res.status(201).json(newUser);
   } catch (e) {
-    console.log("Database Post Error : " + error);
+    console.log("Database Post Error : " + e);
     return res.status(500).json({ data: "Server Error." });
   }
 };
