@@ -8,14 +8,14 @@ const {
   createNeWEmployee,
   updateEmployee,
   deleteEmployee,
-  logIn,
-  logOut,
-  getRefreshToken,
-  
 } = require("../controllers/employeeControllers");
 
-router.route("/").get(getAllEmployees).post(authenticateJWT,createNeWEmployee )
-router.get('/login', logIn);
+const logIn = require('../controllers/authController')
+const logOut = require('../controllers/logOutController')
+const getRefreshToken = require('../controllers/refreshTokenController')
+
+router.route("/").get(getAllEmployees).post(createNeWEmployee )
+router.post('/login', logIn);
 router.get('/logout', logOut);
 router.post('/refresh', getRefreshToken);
 router.route("/:id").put(authenticateJWT,updateEmployee).delete(authenticateJWT,deleteEmployee).get(getEmployee);
