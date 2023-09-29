@@ -3,8 +3,8 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 const handleLogIn = async (req, res) => {
+
   if (!req.body.email || !req.body.password) return res.status(400).json({ 'message': 'Employee email and password required.' });
-  console.log(req.body)
 try {
   const foundEmp = await Employee.findOne({ email: req.body.email })
   if (!foundEmp) return res.status(401).json({ message: "Unauthorized User" }
@@ -13,7 +13,7 @@ try {
   
   if(!result) return res.status(400).json({message:`Password is not correct.`})
 
-  const roles = Object.values(foundEmp);
+  const roles = Object.values(foundEmp.roles).filter(Boolean);
   const userInfo = {
     email: foundEmp.email,
     roles:roles
@@ -29,7 +29,7 @@ try {
   foundEmp.refreshToken = refreshToken;
   await foundEmp.save()
 
-  res.json({accessToken:accessToken,foundEmp})
+  res.json({roles,accessToken,})
 } catch (error) {
   console.error(error)
 }

@@ -15,7 +15,8 @@ function authenticateJWT(req, res, next) {
       return res.sendStatus(403); // Forbidden (invalid token)
     }
 
-    req.user = user;
+    req.user = user.email;
+    req.roles = user.roles;
 
     next();
   });
